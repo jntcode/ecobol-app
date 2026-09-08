@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1b5e20">
+    <title>ECOBOL - Coleta de Eletrônicos</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- TELA DE LOGIN -->
+    <div id="login-screen" class="screen active">
+        <div class="screen-content login-container">
+            <div class="logo-section">
+                <div class="logo-icon">♻️</div>
+                <h1 class="app-title">ECOBOL</h1>
+                <p class="app-subtitle">Coleta & Descarte de Eletrônicos</p>
+            </div>
+            <form id="login-form" class="auth-form">
+                <div class="input-group">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" placeholder="seu@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" placeholder="Sua senha" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <p class="auth-switch">Não tem conta? <a href="#" id="go-register">Cadastre-se</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- TELA DE CADASTRO -->
+    <div id="register-screen" class="screen">
+        <div class="screen-content login-container">
+            <div class="logo-section">
+                <div class="logo-icon">♻️</div>
+                <h1 class="app-title">ECOBOL</h1>
+                <p class="app-subtitle">Criar Conta</p>
+            </div>
+            <form id="register-form" class="auth-form">
+                <div class="input-group">
+                    <label for="reg-name">Nome Completo</label>
+                    <input type="text" id="reg-name" placeholder="Seu nome" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-email">E-mail</label>
+                    <input type="email" id="reg-email" placeholder="seu@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-phone">Telefone</label>
+                    <input type="tel" id="reg-phone" placeholder="(00) 00000-0000">
+                </div>
+                <div class="input-group">
+                    <label for="reg-password">Senha</label>
+                    <input type="password" id="reg-password" placeholder="Crie uma senha" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-confirm">Confirmar Senha</label>
+                    <input type="password" id="reg-confirm" placeholder="Confirme a senha" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <p class="auth-switch">Já tem conta? <a href="#" id="go-login">Fazer login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- TELA PRINCIPAL (HOME) -->
+    <div id="home-screen" class="screen">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <span class="header-icon">♻️</span>
+                    <span class="header-title">ECOBOL</span>
+                </div>
+                <button class="btn-icon" id="btn-logout" title="Sair">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-banner">
+                <div class="banner-icon">🌍</div>
+                <div class="banner-text">
+                    <h2>Bem-vindo(a)!</h2>
+                    <p>Registre sua coleta de eletrônicos</p>
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <span class="stat-icon">📱</span>
+                    <span class="stat-number" id="stat-total">0</span>
+                    <span class="stat-label">Registros</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">📦</span>
+                    <span class="stat-number" id="stat-pending">0</span>
+                    <span class="stat-label">Pendentes</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✅</span>
+                    <span class="stat-number" id="stat-collected">0</span>
+                    <span class="stat-label">Coletados</span>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3>Minhas Coletas</h3>
+                <button class="btn btn-add" id="btn-add">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="9" y1="3" x2="9" y2="15"/>
+                        <line x1="3" y1="9" x2="15" y2="9"/>
+                    </svg>
+                    Nova Coleta
+                </button>
+            </div>
+
+            <div id="collect-list" class="collect-list">
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <p>Nenhuma coleta registrada</p>
+                    <span>Adicione sua primeira coleta!</span>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-tab="home">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>Início</span>
+            </button>
+            <button class="nav-item" data-tab="add" id="nav-add">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="16"/>
+                    <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>Adicionar</span>
+            </button>
+            <button class="nav-item" data-tab="profile" id="nav-profile">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Perfil</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- MODAL ADICIONAR/EDITAR -->
+    <div id="modal" class="modal">
+        <div class="modal-overlay" id="modal-close"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Nova Coleta</h3>
+                <button class="btn-close" id="modal-close-btn">&times;</button>
+            </div>
+            <form id="collect-form" class="modal-form">
+                <input type="hidden" id="collect-id">
+                <div class="input-group">
+                    <label for="collect-device">Tipo de Aparelho</label>
+                    <select id="collect-device" required>
+                        <option value="">Selecione...</option>
+                        <option value="Celular">📱 Celular</option>
+                        <option value="Notebook">💻 Notebook</option>
+                        <option value="Tablet">📱 Tablet</option>
+                        <option value="Monitor">🖥️ Monitor</option>
+                        <option value="TV">📺 TV</option>
+                        <option value="Impressora">🖨️ Impressora</option>
+                        <option value="Ar-Condicionado">❄️ Ar-Condicionado</option>
+                        <option value="Geladeira">🧊 Geladeira</option>
+                        <option value="Máquina de Lavar">👕 Máquina de Lavar</option>
+                        <option value="Outros">📦 Outros</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="collect-brand">Marca/Modelo</label>
+                    <input type="text" id="collect-brand" placeholder="Ex: Samsung Galaxy S21">
+                </div>
+                <div class="input-group">
+                    <label for="collect-condition">Condição</label>
+                    <select id="collect-condition" required>
+                        <option value="">Selecione...</option>
+                        <option value="Funcionando">✅ Funcionando</option>
+                        <option value="Com Defeito">⚠️ Com Defeito</option>
+                        <option value="Não Funciona">❌ Não Funciona</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="collect-address">Endereço para Coleta</label>
+                    <input type="text" id="collect-address" placeholder="Rua, número, bairro" required>
+                </div>
+                <div class="input-group">
+                    <label for="collect-date">Data Preferida</label>
+                    <input type="date" id="collect-date" required>
+                </div>
+                <div class="input-group">
+                    <label for="collect-status">Status</label>
+                    <select id="collect-status">
+                        <option value="Pendente">Pendente</option>
+                        <option value="Agendado">Agendado</option>
+                        <option value="Coletado">Coletado</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="collect-notes">Observações</label>
+                    <textarea id="collect-notes" rows="3" placeholder="Alguma informação extra..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="btn-save">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DETALHES -->
+    <div id="detail-modal" class="modal">
+        <div class="modal-overlay" id="detail-close"></div>
+        <div class="modal-content modal-detail">
+            <div class="modal-header">
+                <h3>Detalhes da Coleta</h3>
+                <button class="btn-close" id="detail-close-btn">&times;</button>
+            </div>
+            <div id="detail-body" class="detail-body"></div>
+            <div class="detail-actions">
+                <button class="btn btn-edit" id="btn-edit-detail">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Editar
+                </button>
+                <button class="btn btn-delete" id="btn-delete-detail">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    Excluir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
