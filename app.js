@@ -36,7 +36,8 @@
     const screens = {
         login: $('#login-screen'),
         register: $('#register-screen'),
-        home: $('#home-screen')
+        home: $('#home-screen'),
+        locations: $('#locations-screen')
     };
 
     function showScreen(name) {
@@ -340,11 +341,93 @@
         });
     }
 
+    // ========== COLLECTION POINTS ==========
+    const COLLECTION_POINTS = [
+        { id: 1, name: "Ecoponto Centro", address: "Rua XV de Novembro, 1000 - Centro, Bauru/SP", lat: -22.3246, lng: -49.0871, hours: "Seg-Sex 8h-17h", phone: "(14) 3234-0001" },
+        { id: 2, name: "Recicla Tech Bauru", address: "Av. Brasil, 2500 - Jardim Brasil, Bauru/SP", lat: -22.3315, lng: -49.0723, hours: "Seg-Sáb 9h-18h", phone: "(14) 3234-0002" },
+        { id: 3, name: "Coleta Verde", address: "Rua Taguai, 500 - Vila Mariana, Bauru/SP", lat: -22.3198, lng: -49.0945, hours: "Seg-Sex 7h-16h", phone: "(14) 3234-0003" },
+        { id: 4, name: "Ponto Eco Norte", address: "Av. Anhanguera, 800 - Jardim São Paulo, Bauru/SP", lat: -22.3105, lng: -49.0812, hours: "Seg-Sex 8h-17h", phone: "(14) 3234-0004" },
+        { id: 5, name: "Estação Reciclagem Sul", address: "Rua dos Ipês, 300 - Jardim Ipê, Bauru/SP", lat: -22.3402, lng: -49.0930, hours: "Seg-Sáb 8h-16h", phone: "(14) 3234-0005" },
+        { id: 6, name: "EcoPoint Aparelhos", address: "Rua Curitiba, 1200 - Centro, Bauru/SP", lat: -22.3268, lng: -49.0765, hours: "Seg-Sex 9h-18h", phone: "(14) 3234-0006" }
+    ];
+
+    let map = null;
+
+    function initLocations() {
+        $('#go-locations').addEventListener('click', () => {
+            showScreen('locations');
+            if (!map) {
+                initMap();
+            } else {
+                setTimeout(() => map.invalidateSize(), 100);
+            }
+        });
+
+        $('#btn-back-locations').addEventListener('click', () => {
+            showScreen('login');
+        });
+    }
+
+    function initMap() {
+        map = L.map('map').setView([-22.3246, -49.0871], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const greenIcon = L.divIcon({
+            className: 'custom-marker',
+            html: '<div class="marker-pin">♻️</div>',
+            iconSize: [36, 42],
+            iconAnchor: [18, 42],
+            popupAnchor: [0, -42]
+        });
+
+        const listEl = $('#locations-list');
+        listEl.innerHTML = '';
+
+        COLLECTION_POINTS.forEach(point => {
+            L.marker([point.lat, point.lng], { icon: greenIcon })
+                .addTo(map)
+                .bindPopup(`
+                    <div class="popup-content">
+                        <strong>${point.name}</strong><br>
+                        📍 ${point.address}<br>
+                        🕐 ${point.hours}<br>
+                        📞 ${point.phone}
+                    </div>
+                `);
+
+            const card = document.createElement('div');
+            card.className = 'location-card';
+            card.innerHTML = `
+                <div class="location-card-icon">♻️</div>
+                <div class="location-card-info">
+                    <h4>${point.name}</h4>
+                    <p>📍 ${point.address}</p>
+                    <span>🕐 ${point.hours} · 📞 ${point.phone}</span>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                map.setView([point.lat, point.lng], 16);
+                map.eachLayer(layer => {
+                    if (layer instanceof L.Marker) {
+                        layer.openPopup();
+                    }
+                });
+            });
+            listEl.appendChild(card);
+        });
+
+        setTimeout(() => map.invalidateSize(), 100);
+    }
+
     // ========== INIT ==========
     function init() {
         initAuth();
         initModal();
         initCrud();
+        initLocations();
 
         // Check if already logged in
         const user = DB.getCurrentUser();

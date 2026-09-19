@@ -7,6 +7,7 @@
     <title>ECOBOL - Coleta de Eletrônicos</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <!-- TELA DE LOGIN -->
@@ -20,6 +21,9 @@
                     <span>Carolina Prevedi · Felipe Paviato · Gabrielle Brito · Pedro Santos · Jhonata Rusaffa</span>
                 </div>
             </div>
+            <button class="btn btn-locations" id="go-locations">
+                📍 Ver Locais de Coleta
+            </button>
             <form id="login-form" class="auth-form">
                 <div class="input-group">
                     <label for="login-email">E-mail</label>
@@ -33,6 +37,65 @@
                 <p class="auth-switch">Não tem conta? <a href="#" id="go-register">Cadastre-se</a></p>
             </form>
         </div>
+    </div>
+
+    <!-- TELA LOCAIS DE COLETA -->
+    <div id="locations-screen" class="screen">
+        <div class="locations-header">
+            <div class="locations-header-content">
+                <button class="btn-back" id="btn-back-locations">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+                <div class="locations-header-left">
+                    <span class="header-icon">📍</span>
+                    <span class="header-title">Locais de Coleta</span>
+                </div>
+            </div>
+        </div>
+        <main class="locations-main">
+            <div id="map"></div>
+            <div class="locations-list-section">
+                <h3 class="locations-list-title">Pontos de Coleta</h3>
+                <div id="locations-list" class="locations-list"></div>
+            </div>
+
+            <div class="waste-info-section">
+                <h3 class="locations-list-title">Tipos de Lixo Eletrônico</h3>
+                <p class="waste-info-subtitle">Separar corretamente ajuda o meio ambiente!</p>
+                <div class="waste-info-list">
+                    <div class="waste-info-card waste-green">
+                        <div class="waste-info-header">
+                            <span class="waste-color-dot"></span>
+                            <h4>Linha Verde</h4>
+                        </div>
+                        <p>Equipamentos de informática e telecomunicações. Inclui: celulares, notebooks, computadores, tablets, impressoras, acessórios de informática e semelhantes.</p>
+                    </div>
+                    <div class="waste-info-card waste-blue">
+                        <div class="waste-info-header">
+                            <span class="waste-color-dot"></span>
+                            <h4>Linha Azul</h4>
+                        </div>
+                        <p>São os equipamentos considerados eletroportáteis, como: liquidificador, cafeteira elétrica, sanduicheira, air fryer, furadeira, batedeira, secador de cabelo, aspirador de pó e demais tipos de eletrodomésticos pequenos, ferramentas elétricas, brinquedos ou dispositivos médicos.</p>
+                    </div>
+                    <div class="waste-info-card waste-brown">
+                        <div class="waste-info-header">
+                            <span class="waste-color-dot"></span>
+                            <h4>Linha Marrom</h4>
+                        </div>
+                        <p>Câmeras fotográficas, rádios, monitores, televisores, consoles, aparelhos de som, aparelhos de DVD e VHS e demais tipos de equipamentos de vídeo, áudio e entretenimento. São incluídos em uma categoria diferente dos demais por conta da sua composição, que também oferece alto risco ambiental.</p>
+                    </div>
+                    <div class="waste-info-card waste-white">
+                        <div class="waste-info-header">
+                            <span class="waste-color-dot"></span>
+                            <h4>Linha Branca</h4>
+                        </div>
+                        <p>Eletrodomésticos de grande porte. Dentre eles estão: máquinas de lavar roupas, lava-louças, geladeiras, fogão, cooktop, micro-ondas e semelhantes.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <!-- TELA DE CADASTRO -->
@@ -257,6 +320,7 @@
     <!-- TOAST -->
     <div id="toast" class="toast"></div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
